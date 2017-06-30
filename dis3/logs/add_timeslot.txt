@@ -1,0 +1,58 @@
+made it here!
+
+starting
+ entering room test loop
+
+starting
+ entering room test loop
+ found room availability
+
+starting
+ SELECT * FROM room_availability WHERE 3 = room_id
+ entering room test loop
+ found room availability
+
+starting
+ SELECT * FROM room_availability WHERE 3 = room_id
+ entering room test loop
+ 2015-06-10T18:00:00.000Z 2012-01-01 2015-06-12 room unavailable
+
+starting
+ SELECT * FROM room_availability WHERE 3 = room_id
+ entering room test loop
+ 2015-06-10T18:00:00.000Z 2012-01-01 2015-06-12 room unavailable
+
+starting
+ SELECT * FROM room_availability WHERE 3 = room_id
+ entering room test loop
+ 2015-06-10T14:00:00.000Z 2012-01-01 2015-06-12 room unavailable
+
+starting
+ SELECT * FROM room_availability WHERE 3 = room_id
+ entering room test loop
+ 2015-06-10 2012-01-01 2015-06-12 room unavailable
+
+starting
+ SELECT * FROM room_availability WHERE 3 = room_id
+ entering room test loop
+ 2015-06-10 2012-01-01 2015-06-12
+starting
+ SELECT * FROM room_availability WHERE 2 = room_id
+
+starting
+ SELECT * FROM room_availability WHERE 3 = room_id
+ 2015-06-10 2012-01-01 2015-06-12 room unavailable
+
+starting
+ SELECT * FROM room_availability WHERE 1 = room_id
+
+starting
+ SELECT * FROM room_availability WHERE 1 = room_id
+
+starting
+ SELECT * FROM room_availability WHERE 2 = room_id
+ 2015-06-10 2012-01-01 2015-06-30
+starting
+ SELECT * FROM room_availability WHERE 1 = room_id
+ 2015-06-10 2014-10-10 2015-05-31 room unavailable
+ 2015-06-10 2015-07-10 2100-12-31 room unavailable

@@ -1,0 +1,516 @@
+<div ng-controller="UserList">
+
+	<div class="col-md-12 heading">
+		<h2>People</h2>
+		<button class="btn btn-sm btn-info" ng-click="viewActiveUsers()">View Active Users</button>
+		<button class="btn btn-sm btn-info" ng-click="viewInactiveUsers()">View Inactive Users</button>
+		<button class="btn btn-sm btn-info" ng-click="viewProfessors()">View Professors</button>
+		<button class="btn btn-sm btn-info" ng-click="viewStudents()">View Students</button>
+	</div>
+	<div class="col-md-5">
+		<input type="text" ng-model="query" class="form-control" placeholder="Search..."><hr>
+		<div class="list-group" style="height:600px; overflow:auto">
+			<div class="list-group-item" ng-repeat="user in users | filter:query | orderBy: 'firstName'">
+				<h4 class="list-group-item-heading">
+					<a ng-click="selectUser(user)">{{user.firstName + ' ' + user.lastName}}</a><br />
+				</h4>
+				<div class="list-group-item-text">
+					<small>
+						E-mail: <a href="mailto:{{user.email}}">{{user.email}}</a>
+					</small>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Add people -->
+
+	<div class="col-md-5">
+		<button class="btn btn-left btn-info col-md-4" ng-click="toggleAddPerson()">Add Person</button>	
+		<div class="col-md-4"></div>
+	</div>
+	
+	<div ng-show="showPerson" class="col-md-7">
+		<br>
+		<form class="form-horizontal" name="personInsert" novalidate>
+			<fieldset class="form-group">
+				<legend>Person Information</legend>
+				<!-- First Name, Last Name, email, gender, picture, positions, keys, relationships-->
+				<div class="form-group">
+    				<label class="col-sm-4 control-label">First Name*</label>
+    				<div class="col-sm-8">
+      					<input type="text" class="form-control" name="firstName" id="firstName" ng-model="newPerson.firstName" placeholder="First Name" required/>
+      					<span style="color:red" ng-show="personInsert.firstName.$dirty && personInsert.firstName.$invalid">
+      						<span ng-show="personInsert.firstName.$error.required">First Name is Required!</span>
+      					</span>
+    				</div>
+  				</div>	
+  				
+  				<div class="form-group">
+    				<label class="col-sm-4 control-label">Last Name*</label>
+    				<div class="col-sm-8">
+      					<input type="text" class="form-control" name="lastName" id="lastName" ng-model="newPerson.lastName" placeholder="Last Name" required/>
+      					<span style="color:red" ng-show="personInsert.lastName.$dirty && personInsert.lastName.$invalid">
+      						<span ng-show="personInsert.lastName.$error.required">Last Name is Required!</span>
+      					</span>
+    				</div>
+  				</div>
+  				
+  				<div class="form-group">
+    				<label class="col-sm-4 control-label">Andrew ID*</label>
+    				<div class="col-sm-8">
+      					<input type="text" class="form-control" name="andrewID" id="andrewID" ng-model="newPerson.andrewID" placeholder="Andrew ID" required/>
+      					<span style="color:red"></span>
+      						<span ng-show="personInsert.andrewID.$error.required">Andrew ID is Required!</span>
+    				</div>
+  				</div>
+
+  				<div class="form-group">
+    				<label class="col-sm-4 control-label">Email*</label>
+    				<div class="col-sm-8">
+      					<input type="text" class="form-control" name="email_id" id="email_id" ng-model="newPerson.email" placeholder="example@example.com" required/>
+      					<span style="color:red"></span>
+      						<span ng-show="personInsert.email.$error.required">Email is Required!</span>
+    				</div>
+  				</div>
+  				
+  				<div class="form-group">
+    				<label class="col-sm-4 control-label">Gender*</label>
+    				<div class="col-sm-8">
+    					<input type="radio" name="gender" value="Male" ng-model="newPerson.gender" required>Male<br>
+    					<input type="radio" name="gender" value="Female" ng-model="newPerson.gender">Female
+    				</div>
+  				</div>
+  				
+  				<div class="form-group">
+  					<label class="col-sm-4 control-label">Upload profile picture</label>
+  					<div class="col-sm-8" uploader="uploader">
+  						<!--<input type="file" name="upload_pic" accept="image/*" ng-model="newPerson.pic">-->
+						<!--<element ng-if="uploader2">-->
+						<input id="picture" type="file" nv-file-select="" accept="image/*" uploader="uploader2" ng-model="newPerson.pic"/>
+						<!--</element>-->
+
+
+						<div ng-repeat="item in uploader2.queue">
+
+								<strong>{{ item.file.name }}</strong>
+								<div ng-thumb="{ file: item._file, height: 100 }"></div>
+						</div>
+
+  					</div>
+  				</div>
+  			</fieldset>
+
+  			<!-- Positions -->
+  			<fieldset>
+  			<button class="btn btn-left btn-success" ng-click = "showAdd()">Add Position</button>
+  			<div ng-show="addPos">
+  				<legend>Positions Held</legend>
+				<h3><center>Add Position!</center></h3>
+				<div class="form-group">
+					<label class="col-sm-4 control-label"></label>
+					<div class="col-sm-8">
+						<select class="form-control" id="pId" name="pId" ng-model="np.pId" ng-options="pos.positionID as pos.position for pos in positions | orderBy: 'position'"></select>
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Start Date:</label>
+					<div class="col-sm-8">
+						<a class="dropdown-toggle my-toggle-select-1" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">	
+							<div class="input-group">
+								<input type="text" class="form-control" name="start_date" id="start_date" ng-model="np.startDate" placeholder="Start Date">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<datetimepicker date-format="YYY-mm-dd" data-ng-model="np.startDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-1', minView: 'day' }"></datetimepicker>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label">End Date:</label>
+					<div class="col-sm-8">
+						<a class="dropdown-toggle my-toggle-select-2" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">	
+							<div class="input-group">
+								<input type="text" class="form-control" name="end_date" id="end_date" ng-model="np.endDate" placeholder="End Date">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<datetimepicker date-format="YYY-mm-dd" data-ng-model="np.endDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-2', minView: 'day' }"></datetimepicker>
+						</ul>
+					</div>
+				</div>
+			</div>
+  			</fieldset>
+
+  			<!-- <fieldset>
+  			<legend>Keys Owned (if applicable)</legend>
+  				<div class="form-group">
+  					<label class="col-sm-4 control-label">Key Number</label>
+  					<div class="col-sm-8">
+  					</div>
+  				</div>
+  			</fieldset> -->
+
+  			<!--Relationships-->
+  			<br>
+  			<fieldset>
+  			<button class="btn btn-left btn-success" ng-click = "showAddRel()">Add Relationship</button>
+  			<div ng-show="addRel">
+  			<legend>Related People</legend>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Relationship Type</label>
+					<div class="col-sm-8">
+						<select class="form-control" id="rId" name="rId" ng-model="newPerson.rId" ng-options="rel.id as rel.relationship for rel in relationships"></select>
+					</div>
+				</div>
+	
+				<div class="form-group">		
+					<label class="col-sm-4 control-label">Relationship Start Date:</label>
+					<div class="col-sm-8">
+						<a class="dropdown-toggle my-toggle-select-1" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">	
+							<div class="input-group">
+								<input type="text" class="form-control" name="rel_start" id="rel_start" ng-model="newPerson.relStart" placeholder="Start Date">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<datetimepicker date-format="YYY-mm-dd" data-ng-model="newPerson.relStart" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-1', minView: 'day' }"></datetimepicker>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Relationship End Date:</label>
+					<div class="col-sm-8">
+						<a class="dropdown-toggle my-toggle-select-2" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">	
+							<div class="input-group">
+								<input type="text" class="form-control" name="rel_end" id="rel_end" ng-model="newPerson.relEnd" placeholder="End Date">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<datetimepicker date-format="YYY-mm-dd" data-ng-model="newPerson.relEnd" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-2', minView: 'day' }"></datetimepicker>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Who did you work with?</label>
+					<div class="col-sm-8">
+						<select class="form-control" id="relName" name="relName" ng-model="newPerson.relName" ng-options="user.id as user.name for user in users | orderBy: 'name'"></select>
+					</div>
+				</div>
+			</div>
+  			</fieldset>
+
+  			<!-- <fieldset>
+  			<legend>Roles (if applicable)</legend>
+  				<div class="form-group">
+  					<label class="col-sm-4 control-label">Role</label>
+  					<div class="col-sm-8">
+  					</div>
+  				</div>
+  			</fieldset> -->
+
+
+  			<fieldset>
+  				<div class="form-group">
+    				<div class="col-sm-4"></div>
+    				<div class="col-sm-8">
+      					<button type="submit" class="btn btn-default" ng-disabled="personInsert.$invalid" ng-click="addPerson()||uploader2.queue[0].upload()">Submit</button>
+    				</div>
+	    		</div>
+  			</fieldset>
+		</form>	
+	</div>
+
+	<!-- Display Indiv People Information --> 
+
+	<div class="col-md-7" ng-hide = "indiv.id == 0 || !indiv">
+		<div class="heading">
+			<div class="col-md-8">
+			<h2>
+				{{indiv.firstName + ' ' + indiv.lastName}} <button class="btn btn-xs btn-danger" ng-click="deactivate()">Deactivate</button><br />
+				<small><a href="mailto:{{indiv.email}}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>	
+				 {{indiv.email}}<br/>
+				 Gender: {{indiv.gender}}</small>
+				 <hr>
+			</h2>
+			</div>
+			<div class="col-md-4">
+				<img src="{{indiv.image_src}}" width="300"/>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+			<button class="btn btn-left btn-success" ng-click = "showAdd()">Add Position</button>
+			<button class="btn btn-right btn-danger" ng-hide="!positionList" ng-click="showDelete()">Delete Position</button>
+			<div><br /></div>
+			
+			<div ng-show="addPos">
+			<h3><center>Add Position!</center></h3>
+				<form class="form-horizontal" name="positionForm">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"></label>
+						<div class="col-sm-8">
+							<select class="form-control" id="pId" name="pId" ng-model="np.pId" ng-options="pos.positionID as pos.position for pos in positions | orderBy: 'position'"></select>
+						</div>
+					</div>
+		
+					<div class="form-group">		
+						<label class="col-sm-4 control-label">Start Date:</label>
+						<div class="col-sm-8">
+							<a class="dropdown-toggle my-toggle-select-1" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">	
+								<div class="input-group">
+									<input type="text" class="form-control" name="start_date" id="start_date" ng-model="np.startDate" placeholder="Start Date" required>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								<datetimepicker date-format="YYY-mm-dd" data-ng-model="np.startDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-1', minView: 'day' }"></datetimepicker>
+							</ul>
+							<span style="color:red" ng-show="positionForm.start_date.$dirty && positionForm.start_date.$invalid">
+								<span ng-show="positionForm.start_date.$error.required">Please enter a start date!</span>
+							</span>
+						</div>
+					</div>
+	
+					<div class="form-group">
+						<label class="col-sm-4 control-label">End Date:</label>
+				
+						<div class="col-sm-8">
+							<a class="dropdown-toggle my-toggle-select-2" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">	
+								<div class="input-group">
+									<input type="text" class="form-control" name="end_date" id="end_date" ng-model="np.endDate" placeholder="End Date">
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								<datetimepicker date-format="YYY-mm-dd" data-ng-model="np.endDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-2', minView: 'day' }"></datetimepicker>
+							</ul>
+							<!-- <span style="color:red" ng-show="positionForm.end_date.$dirty && positionForm.end_date.$invalid">
+								<span ng-show="positionForm.end_date.$error.required">Please select an end time!</span>
+							</span> -->
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-8">
+							<button type="submit" class="btn btn-default" ng-disabled="positionForm.$invalid" ng-click="addPosition()">Add Position</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+			<h3><center>Delete Position</center></h3>
+				<form class="form-horizontal">
+					<div class="form-group" name="delete">
+						<label class="col-sm-4 control-label">Position</label>
+						<div class="col-sm-8">
+							<select class="form-control" name="position" id="position" ng-model="deletedPosition.upid" ng-options="dp.upID as dp.posFull for dp in positionList | orderBy: 'position'" ></select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-8">
+							<button type="submit" class="btn btn-default" ng-click="deletePosition()">Remove this Position</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<div class="col-md-12">	
+			<div class="panel panel-default" ng-show="positionList || classes || classesTaught">
+				<div class="panel-heading">
+					<h3 class="panel-title">My timeline:</h3>
+				</div>
+				<div class="panel-body">
+					<!-- Angular timeline -->
+					<timeline>
+					    <timeline-event ng-repeat="event in events" side="alternate">
+							<timeline-badge class="{{event.badgeClass}}">
+								<i class="glyphicon {{event.badgeIconClass}}"></i>
+							</timeline-badge>
+							<timeline-panel class="{{event.badgeClass}}">
+								<timeline-heading>
+									<h4>{{event.title}}</h4>
+								</timeline-heading>
+								<p>{{event.content}}</p>
+							</timeline-panel>
+						</timeline-event>
+					</timeline>
+				</div>
+			</div>		
+		</div>
+	
+		<div class="col-md-12">
+			<div class="panel panel-default" ng-hide="!TA"> 
+				<div class="panel-heading">
+					<h3 class="panel-title">I am currently a TA for:</h3>
+				</div>
+				<div class="panel-body">
+					<div ng-repeat="course in TA">
+						<h5><a href="{{course.id}}">{{course.courseNumber}} - {{course.courseName}}</a></h5>
+							<ul>
+								<li>Course Number: {{course.courseNumber}}</li>
+								<li>Start Date: {{course.courseStartTime | date:'longDate'}} </li>
+								<li>End Date: {{course.courseEndTime | date:'longDate'}}</li>
+								<li>Role in Course: {{course.role}} </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="col-md-12">
+			<div class="panel panel-default" ng-hide="!TA">
+				<div class="panel-heading">
+					<h3 class="panel-title">Other TA's for this course</h3>
+				</div>
+				<div class="panel-body">
+					<div ng-repeat="ta in TA">
+						<h5>{{ta.firstName + ' ' + ta.lastName}}</h5>
+						<small><a href="mailto:{{user.userId}}@andrew.cmu.edu"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>	
+						 {{ta.userId}}@andrew.cmu.edu</small>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="panel panel-default" ng-hide = "!keyList">
+				<div class="panel-heading">
+					<h3 class="panel-title">Keys I Own</h3>
+				</div>
+				<div class="panel-body">
+					<div ng-repeat= "key in keyList">
+						<h4>{{key.keyNumber}}</h4>
+					</div>
+				</div>
+			</div>	
+		</div>
+		
+		<div class="col-md-12">
+			<button class="btn btn-left btn-success" ng-click = "showAddRel()">Add Relationship</button>
+			<button class="btn btn-right btn-danger"   ng-hide="!relationshipList" ng-click="showDeleteRel()">Delete Relationship</button>
+			<br>
+			
+			<div ng-show="addRel">
+			<h3><center>Add Relationship!</center></h3>
+				<form class="form-horizontal" name="relationshipForm">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Relationship Type</label>
+						<div class="col-sm-8">
+							<select class="form-control" id="rId" name="rId" ng-model="nr.rId" ng-options="rel.id as rel.relationship for rel in relationships"></select>
+						</div>
+					</div>
+		
+					<div class="form-group">		
+						<label class="col-sm-4 control-label">Relationship Start Date:</label>
+						<div class="col-sm-8">
+							<a class="dropdown-toggle my-toggle-select-1" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">	
+								<div class="input-group">
+									<input type="text" class="form-control" name="rel_start" id="rel_start" ng-model="nr.relStart" placeholder="Start Date">
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								<datetimepicker date-format="YYY-mm-dd" data-ng-model="nr.relStart" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-1', minView: 'day' }"></datetimepicker>
+							</ul>
+						</div>
+					</div>
+	
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Relationship End Date:</label>
+				
+						<div class="col-sm-8">
+							<a class="dropdown-toggle my-toggle-select-2" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">	
+								<div class="input-group">
+									<input type="text" class="form-control" name="rel_end" id="rel_end" ng-model="nr.relEnd" placeholder="End Date">
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								<datetimepicker date-format="YYY-mm-dd" data-ng-model="nr.relEnd" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-2', minView: 'day' }"></datetimepicker>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Who did you work with?</label>
+						<div class="col-sm-8">
+							<select class="form-control" id="relName" name="relName" ng-model="nr.relName" ng-options="user.id as user.name for user in users | orderBy: 'name'"></select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-8">
+							<button type="submit" class="btn btn-default" ng-click="addRelation()">Add Relationship</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+			<div ng-show="deleteRel">
+			<h3><center>Delete Relationship</center></h3>
+				<form class="form-horizontal">
+					<div class="form-group" name="deleteRel">
+						<label class="col-sm-4 control-label">Relationship</label>
+						<div class="col-sm-8">
+							<select class="form-control" name="position" id="position" ng-model="dr.rid" ng-options="dr.rId as dr.relFull for dr in relationshipList" ></select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-8">
+							<button type="submit" class="btn btn-default" ng-click="deleteRelationship()">End this Relationship</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div><br></div>
+			<div class="col-md-12">	
+				<div class="panel panel-default" ng-hide = "!relationshipList">
+					<div class="panel-heading">
+						<h3 class="panel-title">People I've worked with:</h3>
+					</div>
+					<div class="panel-body">
+						<div ng-repeat = "rel in indiv.relationshipList | orderBy: 'relStart':reverse">
+							<ul>
+								<li><h4> {{rel.relationship}}</h4> 
+								{{rel.relWithFirst + ' ' + rel.relWithLast}}<br />
+								From {{rel.relStart | date: 'longDate'}} - {{rel.relEnd | date: 'longDate'}}</li>
+							</ul>
+						</div>
+					</div>		
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

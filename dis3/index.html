@@ -1,0 +1,205 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Stats DIS</title>
+        <script type="text/javascript" src="node_modules/angular/angular.js"></script>
+        <script type="text/javascript" src="node_modules/angular-route/angular-route.js"></script>
+        <script type="text/javascript" src="node_modules/angular-permission/dist/angular-permission.js"></script>
+        <script type="text/javascript" src="node_modules/angular-permission/dist/angular-permission-ng.js"></script>
+        <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+                crossorigin="anonymous"></script>
+        <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+        <script type="text/javascript" src="node_modules/moment/moment.js"></script>
+        <script type="text/javascript" src="node_modules/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
+        <script type="text/javascript" src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+		<script type="text/javascript" src="node_modules/ng-file-upload/dist/ng-file-upload-all.js"></script>
+		<script type="text/javascript" src="node_modules/ng-file-upload/dist/ng-file-upload-shim.js"></script>
+        <script type="text/javascript" src="node_modules/angular-timeline/dist/angular-timeline.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/mainController.js"></script>
+        <script type="text/javascript" src="js/peopleController.js"></script>
+        <script type="text/javascript" src="js/calendarController.js"></script>
+        <script type="text/javascript" src="js/courseListController.js"></script>
+        <script type="text/javascript" src="js/applicationsListController.js"></script>
+        <script type="text/javascript" src="js/hiringPageController.js"></script>
+        <!--<script type="text/javascript" src="js/evaluationsController.js"></script>-->
+        <script type="text/javascript" src="js/evaluationForStaffController.js"></script>
+        <script type="text/javascript" src="js/keysController.js"></script>
+        <script type="text/javascript" src="js/roomsController.js"></script>
+        <script type="text/javascript" src="js/addTimeSlotController.js"></script>
+        <script type="text/javascript" src="js/addUserController.js"></script>
+        <script type="text/javascript" src="js/receptionController.js"></script>
+        <script type="text/javascript" src="partials/reception/js/uploader.js"></script>
+        <script type="text/javascript" src="node_modules/angular-file-uploader/dist/angular-file-upload.min.js"></script>
+        <script type="text/javascript" src="node_modules/angular-file-uploader/console-sham.js"></script>
+        <script type="text/javascript" src="node_modules/angular-file-uploader/image-preview/directives.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="css/schedule.css" />
+        <link rel="stylesheet" type="text/css" href="node_modules/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+        <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="node_modules/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
+        <link rel="stylesheet" type="text/css" href="node_modules/angular-timeline/dist/angular-timeline.css"/>
+
+
+    </head>
+    <body ng-app="StatsInfo" ng-controller="mainControl">
+
+        <div class="container">
+            <!-- Static navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div>
+                        <div class="col-md-10 col-sm-10">
+                            <h1>Department Information System<br />
+                                <small>Department of Statistics</small>
+                            </h1>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <h1><button type="button" class="btn btn-lg btn-default button-right login">Sign In</button></h1>
+                        </div>
+                    </div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li ng-class="{active:isHome}"><a href="#/home" ng-class="{ on: isHome }">Home</a></li>
+                            <li ng-class="{active:isPeople}"><a href="#/people" ng-class="{ on: isPeople }">People</a></li>
+                            <li ng-class="{active:isCourse}"><a href="#/courses" ng-class="{ on: isCourse }">Courses</a></li>
+                            <li ng-class="{active: isKey}"><a href = "#/keys" ng-class = "{ on: isKey }">Keys</a></li>
+                            <li ng-class="{active: isRoom}"><a href = "#/rooms" ng-class="{ on: isRoom }">Rooms</a></li>
+                            <li ng-class="{active:isSchedule}"><a href="#/schedule" ng-class="{ on: isSchedule }">Scheduling</a></li>
+                            <li ng-class="{active:isHiring}"><a href="#/hiring" ng-class="{ on: isHiring }">Hiring/Applying</a></li>
+                            <li ng-class="{active:isApplication}"><a href = "#/applications" ng-class = "{ on: isApplication }">Applications</a></li>
+                            <li ng-class="{active:isReception}"><a href="#/reception" ng-class= "{ on: isReception }">Reception</a></li>
+                            <li ng-class="{active:isEvaluation}"><a href = "#/evaluations" ng-class = "{ on: isEvaluation }">Evaluations</a></li>
+                            <li ng-class="{active:isFaculty}"><a href = "#/faculty" ng-class = "{ on: isFaculty }">Faculty Dashboard</a></li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+                <!--/.container-fluid -->
+            </div>
+        
+            <br />
+            <div class="col-md-12">
+                <div ng-switch on="renderPath[ 0 ]">
+                    <div ng-switch-when="home">
+                        <div ng-include=" 'partials/home.html' "></div>
+                    </div>
+                    <div ng-switch-when="people">
+                        <div ng-include=" 'partials/people/people.html' "></div>
+                    </div>
+                    <div ng-switch-when="courses">
+                        <div ng-include=" 'partials/courses/course_list.html' "></div>
+                    </div>
+                    <div ng-switch-when="schedule">
+                        <div ng-include=" 'partials/ta_schedule/schedule.php' "></div>
+                    </div>
+                    <div ng-switch-when="hiring">
+                        <div ng-include=" 'partials/hiring/hiring.php' "></div>
+                    </div>
+                    <div ng-switch-when="indiv">
+                        <div ng-include=" 'partials/people/people.html/:id' "></div>
+                    </div>
+                    <div ng-switch-when="thankYou">
+                        <div ng-include=" 'partials/hiring/thankyou.html' "></div>
+                    </div>
+                    <div ng-switch-when="addTime">
+                    	<div ng-include=" 'partials/add_timeslot/add_timeslot_angular.php' "></div>
+					</div>
+					<div ng-switch-when="courseIndiv">
+						<div ng-include=" 'partials/courses/course_list.html/:id' "></div>
+					</div>
+					<div ng-switch-when="addUser">
+						<div ng-include=" 'partials/authentication/add_user.php' "></div>
+					</div>
+					<div ng-switch-when="keys">
+						<div ng-include=" 'partials/keys/key_list.html' "></div>
+					</div>
+
+					<div ng-switch-when="rooms">
+						<div ng-include=" 'partials/rooms/room_list.html' "></div>
+					</div>
+
+                    <div ng-switch-when="applications">
+                        <div ng-include=" 'partials/applications/applications_list.html' "></div>
+                    </div>
+
+                     <div ng-switch-when="reception">
+                        <div ng-include=" 'partials/reception/manage.html' "></div>
+                    </div>
+                    <div ng-switch-when="evaluations">
+                        <!--<div ng-include=" 'partials/evaluations/evaluations_list.html' "></div>-->
+                        <div ng-include=" 'partials/evaluations/evaluation_for_staff.html' "></div>
+                    </div>
+                    <div ng-switch-when="faculty">
+                        <div ng-include=" 'partials/faculty_dashboard/dashboard.html' "></div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-12">
+            	<br />
+            </div>
+            <div class="col-md-12 footer">
+				<br>
+            	<div class="col-md-4">
+            		<h4>Carnegie Mellon University</h4>
+			 			<address> <strong>Statistics Department</strong><br>
+			 			 Baker Hall 132<br>
+			 			 Pittsburgh PA, 15213<br>
+			 			 Phone: (412) 268-2717<br />
+			 			 Fax: (412) 268-7828</address>
+            	</div>
+            	<div class="col-md-4">
+            		<h4>Contact</h4>
+            		<u>Admissions:</u> 
+            		<ul>
+            			<li>
+            				admissions@stat.cmu.edu
+            			</li>
+            		</ul>
+            		<u>Academics:</u> 
+            		<ul>
+						<li>
+							acadcoord@stat.cmu.edu    
+						</li>
+            		</ul>
+            	
+            	</div>
+            	<div class="col-md-4">
+            		<h4>External Links</h4>
+            		<ul>
+						<li>
+							<a href="http://www.stat.cmu.edu">Statistics Department Home</a>
+						</li>
+						<li>
+							<a href="http://www.cmu.edu">Carnegie Mellon University</a>
+						</li>
+						<li>
+							<a href="http://www.hss.cmu.edu">Dietrich College of Humanities and Social Sciences</a>
+						</li>
+            		</ul>
+            	</div>
+            </div>
+            <div class="col-md-12">
+            	<br />
+            </div>
+        </div>
+    </body>
+</html>

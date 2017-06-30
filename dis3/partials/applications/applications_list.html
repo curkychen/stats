@@ -1,0 +1,108 @@
+<div ng-controller="apps">
+	<div class="col-md-12 heading">
+		<h2>Applications List</h2>
+	</div>
+	
+	<div class="col-md-6">
+		<input type="text" ng-model="query" class="form-control" placeholder="Search..."><hr>
+		<div class="list-group" style="height:600px; overflow:auto">
+			<div class="list-group-item" ng-repeat="app in apps | filter:query">
+				<h4 class="list-group-item-heading">
+					<a ng-click="selectApp(app)">{{app.email}}</a><br />
+				</h4>
+				<div class="list-group-item-text">
+					<small>
+						{{app.name}}
+					</small>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-md-6"><br></div>
+	
+	<div class="col-md-6" ng-hide = "!appIndiv">
+	
+		<div class="col-md-12">
+			<h3>
+				<button ng-click="toggleStatusChange()" class="btn btn-warning">Change Application Status</button>
+			</h3>
+			<br>
+			<div ng-show="showStatusChange">
+				<form class="form-horizontal" name="statusChanges">
+		
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Application Status</label>
+						<div class="col-sm-8">
+							<select class="form-control" name="status" id="status" ng-model="statusChange.status">
+								<option value="Accepted">Accepted</option>
+								<option value="Rejected">Rejected</option>
+								<option value="Application Pending">Pending</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Mailed to Student</label>
+						<div class="col-sm-8">
+							<select class="form-control" name="sent" id="sent" ng-model="statusChange.sent">
+								<option value="Sent">Sent</option>
+								<option value="Pending">Pending</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Comments</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="comments" id="comments" ng-model="statusChange.comments" placeholder="Comments on Status Change"/>	
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4"></label>
+						<div class="col-sm-8">
+							<button ng-click="updateStatus()" class="btn btn-success">Update Status</button>
+						</div>
+					</div>
+				</form>	
+			</div>
+			
+		</div>
+			
+		<div class="col-md-12">
+			<h2>Application ID: {{appIndiv.id}}</h2>
+			<p>
+			<h3>Application Status: {{appIndiv.appStatus}}</h3>
+			Sent: {{appIndiv.appSent}}<br />
+			Date of Status Effect: {{appIndiv.dateChanged}}
+			<h3> Contact Information </h3>
+			Name: {{appIndiv.name}} <br />
+			Email: {{appIndiv.email}} <br />
+			Address: {{appIndiv.address}} <br />
+			Phone: {{appIndiv.phoneNumber}}<br />
+			Social Security: {{appIndiv.ssn}} <br />
+			
+			
+			<h3>Language Information</h3>
+			First Language: {{appIndiv.firstLang}} <br />
+			ITA: {{appIndiv.ita}} <br />
+			ITA Score: {{appIndiv.itaScore}}
+			
+			
+			<h3>Academic Information</h3>
+			Year of Graduation: {{appIndiv.gradYear}} <br />
+			Major: {{appIndiv.majorOne}} <br />
+			Second Major (optional): {{appIndiv.majorTwo}} <br />
+			Minor: {{appIndiv.minor}} <br />
+			advisor: {{appIndiv.advisor}} <br />
+			Preferred Courses: {{appIndiv.preferredCourses}} <br />
+			Reference: {{appIndiv.taRef}} <br />
+			Relevant Skills: {{appIndiv.skills}}
+
+			</p>
+		</div>
+		
+		
+	</div>
+</div>

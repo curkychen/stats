@@ -1,0 +1,99 @@
+<div ng-controller = "addUser">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<h2>
+			Please Enter User Information:
+		</h2>
+		<div ng-show="success">
+			<div class="alert alert-success" role="alert">{{success}}</div>
+		</div>
+		<div ng-show="error">
+			<div class="alert alert-warning" role="alert">{{error}}</div>
+		</div>
+		<form class="form-horizontal" name="userInsert">
+				
+			<div class="form-group">
+				<label class="col-sm-4 control-label">First Name</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="first_name" id="first_name" ng-model="user.firstName" placeholder="First Name" ng-model-options="{ updateOn: 'blur' }" required>
+					<span style="color:red" ng-show="userInsert.first_name.$dirty && userInsert.first_name.$invalid">
+						<span ng-show="userInsert.first_name.$error.required">First Name is Required!</span>
+					</span>
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Last Name</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="last_name" id="last_name" ng-model="user.lastName" placeholder="Last Name" required>
+					<span style="color:red" ng-show="userInsert.last_name.$dirty && userInsert.last_name.$invalid">
+						<span ng-show="userInsert.last_name.$error.required">Last Name is Required!</span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Nickname</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="nickname" id="nickname" ng-model="user.nickName" placeholder="Nickname">
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Gender</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="gender" id="gender" ng-model="user.gender" placeholder="Gender" required>
+					<span style="color:red" ng-show="userInsert.gender.$dirty && userInsert.gender.$invalid">
+						<span ng-show="userInsert.gender.$error.required">Gender is Required!</span>
+					</span>
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Preferred Email Address</label>
+				<div class="col-sm-8">
+					<input type="email" class="form-control" name="email" id="email" ng-model="user.email" placeholder="Email" required>
+					<span style="color:red" ng-show="userInsert.email.$dirty && userInsert.email.$invalid">
+						<span ng-show="userInsert.email.$error.required">Email is Required!</span>
+						<span ng-show="userInsert.email.$error.email">Invalid Email!</span>
+					</span>
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Password</label>
+				<div class="col-sm-8">
+					<input type="password" class="form-control" name="password" id="password" ng-model="user.password" placeholder="password" required>
+					<span style="color:red" ng-show="userInsert.password.$dirty && userInsert.password.$invalid">
+						<span ng-show="userInsert.password.$error.required">Password is Required!</span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Students: are you in a joint program? and if so, which one?</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="joint" id="joint" ng-model="user.joint" placeholder="Joint Major" required>
+				</div>
+			</div>
+		
+			
+			<div class="form-group">
+  				<div class="input-group">
+    				<label class="col-sm-4 control-label">Image</label>  		
+    				<div class="col-sm-8">
+      					<input id="image" type="file" accept="image/*" image="image" ng-model="user.imageSrc" />
+      					<img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" />
+      				</div>
+    			</div>
+  			</div>
+		
+			<div class="form-group">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-8">
+					<button type="submit" class="btn btn-default" ng-disabled="userInsert.$invalid" ng-click="submitForm()">Add User</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,198 @@
+<div ng-controller="courseList"> 
+	<div class="col-md-12 heading">
+		<h2>Available Courses
+			<!--<button type="button" class="btn btn-info btn-right" ng-click="toggle()">Add Course</button>-->
+		</h2>
+	</div>
+	
+	<div class="col-md-5">
+		<input type="text" ng-model="query" class="form-control" placeholder="Search..."><hr>
+		<div class="list-group" style="height:600px; overflow:auto" >
+			<div class="list-group-item" ng-repeat="course in courses | filter:query">
+				
+    				<h4 class="list-group-item-heading">
+    					<a ng-click= "selectCourse(course)">{{course.courseNumber}} - {{course.courseName}}</a>
+    				</h4>
+    			
+    				<p class="list-group-item-text">
+    					{{course.instructor}}<br>
+    					{{course.email}}<br>
+						Semester(s) Offered: {{course.semester}}<br />
+    				</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-5">
+		<button class="btn btn-left btn-info col-md-4" ng-click="toggleAddCourse()">Add Course</button>	
+		<div class="col-md-4"></div>
+		<!-- <button class="btn btn-right btn-info col-md-4" ng-click="toggleUpdate()">Update Course</button> -->
+	</div>
+	<div class="col-md-6"><br></div>
+	<div class="col-md-7" ng-hide="!courseIndiv">
+		<div class="courseHeading">
+			<div class="col-md-7">
+			<h2>
+				{{courseIndiv.courseNumber}} - {{courseIndiv.courseName}} 
+			</h2><hr>
+			<h3>			
+				{{courseIndiv.instructor}}<br />
+				<small>
+					<a href="mailto:{{courseIndiv.email}}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>	
+					{{courseIndiv.email}}
+				</small>
+			</h3>
+			<p>
+				Course Semester: {{courseIndiv.semester}}<br />
+				Start Date: {{courseIndiv.startDate | date:'longDate'}}<br />
+				End Date: {{courseIndiv.endDate | date:'longDate'}}<br />
+			</p>
+			</div>
+		</div>
+	
+		<div class="col-md-7" ng-show="TA">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">TA's for this Course</h3>
+				</div>
+				<div class="panel-body">
+					<div ng-repeat="ta in TA">
+					<p><strong><a href="#/people/{{ta.id}}">{{ta.firstName + ' ' + ta.lastName}}</a></strong><br>
+					<a href="mailto:{{ta.andrewID}}@andrew.cmu.edu"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>	
+						{{ta.andrewID}}@andrew.cmu.edu
+					</p>	
+				</div>
+				</div>
+			</div>
+		</div>
+	
+		<div  class="col-md-7" ng-show="!TA">
+			There are currently no TA's for this course!
+		</div>
+	</div>
+	
+	<div class="col-md-7">
+		<div ng-show="success">
+			<div class="alert alert-success" role="alert">{{success}}</div>
+		</div>
+		<div ng-show="error">
+			<div class="alert alert-warning" role="alert">{{error}}</div>
+		</div>
+		<div ng-show="showCourse">
+			<form class="form-horizontal" name="classInsert">
+				<fieldset class="form-group">
+					<legend>Course Information</legend>
+					<div class="form-group">
+	    				<label class="col-sm-4 control-label">Course Name*</label>
+	    				<div class="col-sm-8">
+	      					<input type="text" class="form-control" name="name" id="name" ng-model="newCourse.name" placeholder="Course Name" required/>
+	      					<span style="color:red" ng-show="classInsert.name.$dirty && classInsert.name.$invalid">
+	      						<span ng-show="classInsert.name.$error.required">Course Name is Required!</span>
+	      					</span>
+	    				</div>
+	  				</div>	
+	  				
+	  				<div class="form-group">
+	    				<label class="col-sm-4 control-label">Course Number*</label>
+	    				<div class="col-sm-8">
+	      					<input type="text" class="form-control" name="number" id="number" ng-model="newCourse.number" placeholder="Course Number" required/>
+	      					<span style="color:red" ng-show="classInsert.number.$dirty && classInsert.number.$invalid">
+	      						<span ng-show="classInsert.number.$error.required">Course Number is Required!</span>
+	      					</span>
+	    				</div>
+	  				</div>
+	  				
+	  				<div class="form-group">
+	    				<label class="col-sm-4 control-label">Course Instructor*</label>
+	    				<div class="col-sm-8">
+	      					<select class="form-control" name="instructor_id" id="instructor_id" ng-model="newCourse.instructor_id" ng-options = "i.id as i.firstName+' '+i.lastName for i in instructors" placeholder="Choose course instructor..." required></select>
+	      					<span style="color:red"></span>
+	      						<span ng-show="classInsert.instructor.$error.required">Course Instructor ID is Required!</span>
+	    				</div>
+	  				</div>
+	  				
+	  				<div class="form-group">
+	    				<label class="col-sm-4 control-label">Course Semester</label>
+	    				<div class="col-sm-8">
+	      					<select class="form-control" name="semester" ng-model="newCourse.semester" ng-options="semester.semester as semester.semester for semester in semesters">
+							</select> 
+	    				</div>
+	  				</div>
+	  				
+	  				<div class="form-group">
+	    				<label class="col-sm-4 control-label">Start Date*</label>
+	    				<div class="col-sm-8">
+	         				<a class="dropdown-toggle my-toggle-select-1" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">	
+	    						<div class="input-group">
+	      							<input type="text" class="form-control" name="start_date" id="start_date" ng-model="newCourse.startDate" placeholder="Start Date" required/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								<datetimepicker date-format="YYYY-mm-dd" data-ng-model="newCourse.startDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-1', minView: 'day' }"></datetimepicker>
+							</ul>
+	      					<span style="color:red" ng-show="classInsert.startDate.$dirty && classInsert.startDate.$invalid">
+	      						<span ng-show="classInsert.startDate.$error.required">Start Date is Required!</span>
+	      					</span>
+	    				</div>
+	  				</div>
+					
+					<div class="form-group">
+	    				<label class="col-sm-4 control-label">End Date*</label>   				
+	    				<div class="col-sm-8">
+	    					<a class="dropdown-toggle my-toggle-select-2" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">					
+								<div class="input-group">
+									<input type="text" class="form-control" name="end_date" id="end_date" ng-model="newCourse.endDate" placeholder="End Date" required/>					
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">						
+							<datetimepicker data-ng-model="newCourse.endDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select-2', minView: 'day' }"></datetimepicker>				
+							</ul>
+
+	      					<span style="color:red" ng-show="classInsert.endDate.$dirty && classInsert.endDate.$invalid">
+	      						<span ng-show="classInsert.endDate.$error.required">End Date is Required!</span>
+	      					</span>
+	    				</div>
+	  				</div>
+	  			</fieldset>
+
+  				<fieldset class="form-group">
+    			<legend>TA Information (if applicable)</legend>
+	  				<div class="form-group">
+	  					<label class="col-sm-4 control-label">TA First Name</label>
+	    				<div class="col-sm-8">
+	      					<input type="text" class="form-control" name="TA_fname" id="TA_fname" ng-model="newCourse.TA_fname" placeholder="TA First Name"/>
+	      				</div>
+	      			</div>
+
+	      			<div class="form-group">
+	      				<label class="col-sm-4 control-label">TA Last Name</label>
+	    				<div class="col-sm-8">
+	      					<input type="text" class="form-control" name="TA_lname" id="TA_lname" ng-model="newCourse.TA_lname" placeholder="TA Last Name"/>
+	      				</div>
+	      			</div>	
+
+	      			<div class="form-group">
+	      				<label class="col-sm-4 control-label">TA Andrew ID</label>
+	    				<div class="col-sm-8">
+	      					<input type="text" class="form-control" name="TA_andrew" id="TA_andrew" ng-model="newCourse.TA_andrew" placeholder="TA Andrew ID"/>
+	      				</div>
+	      			</div>
+					
+					<div class="form-group">
+	    				<div class="col-sm-4"></div>
+	    				<div class="col-sm-8">
+	      					<button type="submit" class="btn btn-default" ng-disabled="classInsert.$invalid" ng-click="addCourse()">Submit</button>
+	    				</div>
+	  				</div>
+	  			</fieldset>
+
+  			</form>	
+		</div>
+	</div>	
+	
+</div>

@@ -1,0 +1,193 @@
+<html>
+	<head>
+	 	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+	        <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+	        <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+	        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+	        <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+	        <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	        <script type="text/javascript" src="bower_components/moment/moment.js"></script>
+	        <!-- UI Calendar has been moved to old_bower_components folder -->
+        	<script type="text/javascript" src="old_bower_components/angular-ui-calendar/src/calendar.js"></script>
+	        <script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.js"></script>
+	       <!-- Angular bootstrap datetimepicker has been moved to old_bower_components folder -->
+        	<script type="text/javascript" src="old_bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+			<script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+			<script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+	        <script type="text/javascript" src="js/app.js"></script>
+	        <script type="text/javascript" src="js/controllers.js"></script>
+	        <script type="text/javascript" src="js/ApplicationController.js"></script>
+	        <script type="text/javascript" src="partials/ta_schedule/calendarController.js"></script>
+        
+	        <link rel="stylesheet" type="text/css" href="css/schedule.css">
+	        <link rel="stylesheet" type="text/css" href="bower_components/fullcalendar/dist/fullcalendar.css">
+	        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	        <!-- Angular bootstrap datetimepicker has been moved to old_bower_components folder -->
+        	<link rel="stylesheet" type="text/css" href="old_bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
+			<link type="text/css" href="css/ng-file-upload.css">
+	</head>
+	<body ng-app="StatsInfo" ng-controller = "addUser">
+	<div class="container">
+		<div class="col-md-12">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<h2>Welcome to the Department of Statistics</h2>
+				To enter the Department information System, Please Login.
+			</div>
+		</div>
+			<div class="col-md-12">
+				<h1 style = "text-align:center">Login</h1>
+			</div>
+			<div class="col-md-12 andrew" ng-show="section == '0'">
+				<div style = "text-align: center">
+					To begin, please select whether you have an active andrew ID:  
+				</div><br />
+				<div class="col-md-6">
+					<button type="button" class="btn btn-info btn-right" ng-click="andrewID()">I currently have an active andrew ID</button>
+				</div>
+				<div class="col-md-6">			
+					<button type="button" class="btn btn-info" ng-click="validateSection1()">I do NOT currently have an active andrew ID</button>
+				</div>
+			
+		</div>
+
+			<div class="col-md-12" ng-show="section == '1'">
+			<div>
+				<button type="button" class="btn btn-info btn-left" ng-click="section = '0'">Previous</button>
+			</div>
+			<div class="col-md-6">
+				<button type="button" class="btn btn-info btn-right" ng-click = "section = '2'">I already have a Stats DIS account</button>
+			</div>
+			<div class="col-md-6"> 
+				<button type="button" class="btn btn-info" ng-click = "section = '3'">Sign up for a Stats DIS account</button>
+			</div>
+		</div>
+
+			<div class="col-md-12 disLogin" ng-show="section == '2'">
+		<div>
+		<button type="button" class="btn btn-info btn-left" ng-click="section = '1'">Previous</button>
+		</div>
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+			<div ng-show="success">
+				<div class="alert alert-success" role="alert">{{success}}</div>
+			</div>
+			<div ng-show="error">
+				<div class="alert alert-warning" role="alert">{{error}}</div>
+			</div>
+			<form class="form-horizontal" name="disLoginForm" method="post">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Email: </label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="email" id="email" ng-model="dis.email" required />
+						<span style="color:red" ng-show="disLoginForm.email.$dirty && disLoginForm.email.$invalid">
+							<span ng-show="disLoginForm.email.$error.required">Email is Required!</span>
+							<span ng-show="disLoginForm.email.$error.email">Invalid Email!</span>
+						</span>
+					</div>
+				</div>
+		
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Password: </label>
+					<div class="col-sm-8">
+						<input type="password" class="form-control" name="dis_pw" id="dis_pw" ng-model="dis.disPw" required />
+						<span style="color:red" ng-show="disLoginForm.disPw.$dirty && disLoginForm.disPw.$invalid">
+							<span ng-show="disLoginForm.disPw.$error.required">Password is Required!</span>
+						</span>
+					</div>
+				</div>
+		
+				<div class="form-group">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-4">
+						<button type="submit" class="btn btn-info" ng-click="disLogin()">Log In </button>
+					</div>
+				</div>
+			</form>
+			</div>
+			<div class="col-md-3"></div>
+		</div>
+
+			<div class="col-md-12 non-andrew" ng-show="section == '3'">
+			<button type="button" class="btn btn-info btn-left" ng-click="section = '1'">Previous</button>
+	
+			<div ng-show="success">
+				<div class="alert alert-success" role="alert">{{success}}</div>
+			</div>
+			<div ng-show="error">
+				<div class="alert alert-warning" role="alert">{{error}}</div>
+			</div>
+			<form class="form-horizontal" name="userInsert" method="post">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">First Name</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="first_name" id="first_name" ng-model="user.firstName" placeholder="First Name" ng-model-options="{ updateOn: 'blur' }" required>
+						<span style="color:red" ng-show="userInsert.first_name.$dirty && userInsert.first_name.$invalid">
+							<span ng-show="userInsert.first_name.$error.required">First Name is Required!</span>
+						</span>
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Last Name</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="last_name" id="last_name" ng-model="user.lastName" placeholder="Last Name" required>
+						<span style="color:red" ng-show="userInsert.last_name.$dirty && userInsert.last_name.$invalid">
+							<span ng-show="userInsert.last_name.$error.required">Last Name is Required!</span>
+						</span>
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Preferred Email Address</label>
+					<div class="col-sm-8">
+						<input type="email" class="form-control" name="email" id="email" ng-model="user.email" placeholder="Email" required>
+						<span style="color:red" ng-show="userInsert.email.$dirty && userInsert.email.$invalid">
+							<span ng-show="userInsert.email.$error.required">Email is Required!</span>
+							<span ng-show="userInsert.email.$error.email">Invalid Email!</span>
+						</span>
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Password</label>
+					<div class="col-sm-8">
+						<input type="password" class="form-control" name="password" id="password" ng-model="user.password" placeholder="password" required>
+						<span style="color:red" ng-show="userInsert.password.$dirty && userInsert.password.$invalid">
+							<span ng-show="userInsert.password.$error.required">Password is Required!</span>
+						</span>
+					</div>
+				</div>
+		
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Position</label>
+					<div class="col-sm-8">
+						<select class="form-control" id="position" ng-model="user.position" ng-options="position.value as position.value for position in positions" required></select>
+					</div>
+				</div>
+		
+				<div class="form-group">
+					<label class="col-sm-4 control-label">Image</label>  		
+					<div class="col-sm-8">
+					<!-- let's use ng-file-upload 
+					<button class="btn btn-left" ng-file-select ng-model="files" ng-multiple="true">Upload</button>-->
+					<input type="file" ngf-select ng-model="image" class="form-control" name="image" accept="image/*" ng-multiple = "false" required/>
+					
+					<!-- <div class="button" ngf-select ng-model="files"></div>	 -->
+						<!-- <input class="form-control" id="image" type="file" accept="image/*" image="image" ng-model="user.image" /> -->
+						<!-- <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" />-->
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label class="col-sm-4 control-label">NOTE: all fields are required!</label>
+					<div class="col-sm-8">
+						<button type="submit" class="btn btn-default" ng-disabled="userInsert.$invalid" ng-click="submitForm()">Add User</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	</body>
+</html>
+					

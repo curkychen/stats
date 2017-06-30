@@ -1,0 +1,45 @@
+<div ng-controller="CourseIndiv">
+
+	<div class="heading">
+			<a href="#/courses" class="btn btn-info btn-right" role="button">Return To Course List</a>
+
+		<h2>
+			{{course.courseNumber}} - {{course.courseName}} 
+		</h2><hr>
+		<h3>			
+			{{course.instructor}}<br />
+			<small>
+				<a href="mailto:{{course.instructor}}@andrew.cmu.edu"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>	
+				{{course.email}}
+			</small>
+		</h3>
+
+	</div>
+
+	<div class="col-md-6">
+		<p>
+			Course Semester: {{course.semester}}<br />
+			Start Date: {{course.startDate | date:'longDate'}}<br />
+			End Date: {{course.endDate | date:'longDate'}}<br />
+		</p>
+
+	</div>
+	<div class="col-md-6" ng-show="TA">
+		<div class="panel panel-default">
+  			<div class="panel-heading">
+    			<h3 class="panel-title">TA's for this Course</h3>
+  			</div>
+  			<div class="panel-body">
+    			<div ng-repeat="ta in TA">
+				<p><strong><a href="#/people/users/user.php/{{ta.id}}">{{ta.firstName + ' ' + ta.lastName}}</a></strong><br>
+				<a href="mailto:{{ta.andrewID}}@andrew.cmu.edu"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>	
+					{{ta.andrewID}}@andrew.cmu.edu
+				</p>	
+			</div>
+  			</div>
+		</div>
+	</div>
+	<div  class="col-md-6" ng-show="!TA">
+		There are currently no TA's for this course!
+	</div>
+</div>

@@ -1,0 +1,172 @@
+<div ng-controller="keys">
+	<div class="col-md-12 heading">
+		<h2>Key List</h2>
+	</div>
+	
+	<div class="col-md-5" >
+		<input type="text" ng-model="query" class="form-control" placeholder="Search..."><hr>
+		<div class="list-group" style="height:600px; overflow:auto">
+			<div class="list-group-item" ng-repeat="key in keys | filter:query">
+				<h4 class="list-group-item-heading">
+					<a ng-click="selectKey(key)">{{key.keyNumber}}</a><br />
+				</h4>
+				<div class="list-group-item-text">
+					<small>
+						{{key.room}}
+					</small>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-md-5">
+		<button class="btn btn-left btn-info col-md-4" ng-click="toggleAddKey()">Add Key</button>	
+		<div class="col-md-4"></div>
+		<button class="btn btn-right btn-info col-md-4" ng-click="toggleUpdate()">Update Key</button>
+	</div>
+	<div class="col-md-6"><br></div>
+	<div class="col-md-6" ng-show="showKey">
+		<div ng-show="success">
+			<div class="alert alert-success" role="alert">{{success}}</div>
+		</div>
+		<div ng-show="error">
+			<div class="alert alert-warning" role="alert">{{error}}</div>
+		</div>
+		<form class="form-horizontal" name="add">
+		
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Key Number</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="number" id="number" ng-model="newKey.number" placeholder="Key Number"/>
+					<span style="color:red" ng-show="add.number.$dirty && add.number.$invalid">
+						<span ng-show="add.number.$error.required">Key Number is Required!</span>
+					</span>
+				</div>
+			</div>
+		
+		
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Building</label>
+				<div class="col-sm-8">
+					<select class="form-control" name="building" id="building" ng-model="newKey.building" ng-options = "b.bId as b.bName for b in buildings"></select>
+		
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Amount</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="amount" id="amount" ng-model="newKey.amount" placeholder="Keys Available" />
+					<span style="color:red" ng-show="add.amount.$dirty && add.amount.$invalid">
+						<span ng-show="add.amount.$error.required">Key Amount is Required!</span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Access <small>(add more rooms with the 'Update' Tab)</small></label>
+				<div class="col-sm-8">
+					<select class="form-control" ng-model="newKey.room" ng-options = "room.roomID as room.roomNumber for room in rooms"></select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-8">
+					<button type="submit" class="btn btn-default" ng-disabled="add.$invalid" ng-click="addKey()">Add Key</button>
+				</div>
+			</div>
+			
+		</form>
+	</div>
+	<div class="col-md-6" ng-show="showUpdate">
+	<div class="col-md-4"></div>
+	Add another room this key opens
+		<form class="form-horizontal" name="update">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Key</label>
+				<div class="col-sm-8">
+					<select class="form-control" ng-model="keyUpdate.key" ng-options = "key.keyId as key.keyNumber for key in keys"></select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Access </label>
+				<div class="col-sm-8">
+					<select class="form-control" ng-model="keyUpdate.room" ng-options = "room.roomID as room.roomNumber for room in rooms"></select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-8">
+					<button type="submit" class="btn btn-default" ng-click="updateKey()">Update Key</button>
+				</div>
+			</div>
+		</form>
+	</div>
+			
+
+	<div class="col-md-6" ng-hide = "!keyIndiv">
+		
+		<div class="col-md-12">
+			<h2>{{keyIndiv.keyNumber}}</h2>
+			<p>
+			building: {{keyIndiv.building}} <br />
+			available: {{keyIndiv.inStock}}
+			</p>
+		</div>
+		
+		<div class="col-md-12">
+			<h3><button ng-click="toggleCheckIn()" class="btn  btn-left btn-success">Check In</button><button ng-click="toggleCheckOut()" class="btn btn-right btn-danger ">Check out</button></h3>
+			<br>
+			<div ng-show="showCheckIn">
+				<form>
+					<div>
+						<select class="form-control" ng-model="checkInUser.uid" ng-options= "keyOwner.id as keyOwner.name  for keyOwner in keyOwners" ></select>
+					</div>
+					<br>
+					<div>
+					<button class="btn btn-right btn-info col-md-12" ng-click="checkIn()">Check in key</button>
+					</div>
+				</form>
+				<br>
+			</div>
+			
+			<div ng-show="showCheckOut">
+				<form>
+					<div>
+					<select class="form-control" ng-model="checkOutUser.id" ng-options= "user.id as user.name  for user in users | orderBy: 'user.name'" ></select>
+					</div>
+					<br>
+					<div>
+					<button class="btn btn-right btn-info col-md-12" ng-click="checkOut()">Check out key</button>
+					</div>
+				</form>
+				<br>
+			</div>
+			<br>
+			
+			 
+			<h3>Rooms this Key Opens:</h3>
+			<div class="list-group">
+				<div class="list-group-item" ng-repeat = "room in roomList | orderBy: 'room'">
+					<h4 class="list-group-item-heading">
+						{{room.roomNumber}}
+					</h4>
+				</div>
+			</div>
+		
+			<h3>Checked Out By:</h3>
+			<div class="list-group" >
+				<div class="list-group-item" ng-repeat = "keyOwner in keyOwners | orderBy: 'name'">
+					<h4 class="list-group-item-heading">
+						{{keyOwner.name}}
+						
+					</h4>
+				</div>
+			</div>
+		</div>
+			
+	</div>
+</div>

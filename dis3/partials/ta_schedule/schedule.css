@@ -1,0 +1,98 @@
+div.layer{
+	position:absolute;
+	z-index:1;
+	/*width:6em;
+	height:1em;*/
+	border:.1em solid black;
+	opacity:0.4;
+	filter:alpha(opacity=40);
+	border-radius:10px;
+}
+tr{
+	height:1em;
+}
+td.taSchedule{
+	width:92px;
+	padding:.5em;
+	border:1px solid black;
+	text-align:center;
+}
+table.schedule{
+	border-collapse:collapse;
+	border: 1px solid black;
+}
+.head{
+	font-size:50px;
+}
+table.minicalendar{
+	border: 1px solid black;
+	height:220px;
+	width:220px;
+	border-radius:15px;
+}
+.signIn{
+	/*position:relative;*/
+	font-size:20px;
+	background-color:#6c6969;
+
+	border:5px solid #6c6969;
+	border-radius:5px;
+}
+.week{
+	/*position:relative;
+	bottom:3em;
+	left:1em;*/
+}
+.caveat{
+	/*position:relative;
+	bottom:6em;
+	left:23em;
+	top:4em;*/
+}
+.title{
+	background-color:#930606;
+	height:5em;
+}
+.body{
+	/*width=900px;*/
+}
+a:link{
+	color:#000000;
+}
+a:visited{
+	color:#000000;
+}
+a:active{
+	color:#000000;
+}
+a:hover{
+	color:#000000;
+}
+.weekday{
+	height:1em;
+	border: 1px solid black;
+	width:92px;
+	padding:3px;
+	text-align:center;
+}
+.top{
+	background-color:#930606;
+}
+td.time{
+	width:52px;
+	padding:.5em;
+	border:1px solid black;
+	text-align:center;
+}
+.timeDay{
+	height:1em;
+	border: 1px solid black;
+	width:52px;
+	padding:3px;
+	text-align:center;
+}
+.img{
+	background-color:#000000;
+	width:72px;
+	height:91px;
+}

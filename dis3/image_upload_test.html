@@ -1,0 +1,61 @@
+<html>
+
+<head>
+	<title>Image Upload</title>
+	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+	<script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link type="text/css" href="css/ng-file-upload.css">
+	
+	<script>
+		var uploadApp = angular.module('uploadApp', ['ngFileUpload']);
+		
+		uploadApp.controller('uploadControl', ['$scope', 'Upload', function($scope, Upload){
+			
+			$scope.submitForm = function(){
+			
+				console.log($scope.image);
+				Upload.upload({
+					url: 'upload.php',
+					method: 'POST',
+					file: file
+				})
+			}
+		}]);	
+	
+	</script>
+</head>
+<body>
+
+<div class="container">
+
+<div class="col-md-12">
+
+	<div class="col-md-4"></div>
+	<div class="col-md-6"  ng-app="uploadApp" ng-controller="uploadControl">
+		<h2>Image Upload</h2>
+		<form type="form-horizontal" name="imageUpload">
+	
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Image</label>  		
+				<div class="col-sm-8">
+					<input type="file" class="form-control" ngf-select ng-model="image" name="image" accept="image/*" required />		
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label">NOTE: all fields are required!</label>
+				<div class="col-sm-8">
+					<button type="submit" class="btn btn-default" ng-click="submitForm()">Upload</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="col-md-12" ng-show="showResult">
+
+</div>
+</body>
+</html>

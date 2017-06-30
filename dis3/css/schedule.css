@@ -1,0 +1,79 @@
+.head {
+	font-size:45px;
+}
+
+.miniCalTitle {
+	font-size:20px;
+}
+
+.title {
+	background-color:#930606;
+	height:10em;
+	border: 5px solid #930606;
+}
+
+a:link {
+	color:#000000;
+}
+a:visited {
+	color:#000000;
+}
+a:active {
+	color:#000000;
+}
+a:hover {
+	color:#000000;
+}
+.img {
+	background-color:#000000;
+	width:72px;
+	height:91px;
+}
+.login {
+	float: right;
+}
+.add-time {
+	margin-bottom: 20px;
+	display: inline-block;
+	float: right;
+}
+.btn-group {
+	margin-bottom: 10px;
+}
+.messages {
+	font-size:30px;
+	background-color:#87d58e;
+}
+
+.forms {
+	border-radius: 5px;
+	border-color: #ddd;
+	border-width: 1px;
+}
+
+.btn-right {
+	float: right;
+}
+
+.col-md-4.paddingless, .col-sm-8.paddingless{
+	padding: 0 0 0 0;
+}
+
+.heading {
+	margin-bottom: 20px;
+}
+
+label.col-sm-4.control-label.required:after {
+  content:" *";
+  color:red;
+}
+
+label.checkbox-inline.ng-binding.ng-scope {
+	margin-left: 0px;
+}
+
+.footer{
+background-color: #f8f8f8;
+border: 1px solid #e7e7e7;
+border-radius: 5px;
+}

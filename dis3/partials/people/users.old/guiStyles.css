@@ -1,0 +1,106 @@
+/*
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+} 
+	
+}
+#list li{
+	background-color:grey;
+	text-align:right;
+	margin:5px;
+}
+
+
+a:link, a:visited
+{
+	display:block;
+	width:240px;
+	color:white;
+	background-color:#333333;
+	text-align:center;
+	padding-left:4px;
+	padding-right:4px;
+	padding-bottom:20px;
+	padding-top:20px;
+	text-transform:uppercase;
+	text-decoration:none;
+	margin:auto;
+}
+a:hover, a:active
+{
+	background-color:#cc0000;
+}
+#picTable
+{
+margin-top:30px;
+width:800px;
+text-align:center;
+margin-left:auto;
+margin-right:auto;
+background-color:black;
+}
+#picTableHead
+{
+background-color:#cc0000;
+color:white;
+padding:19px;
+font-weight:bold;
+
+}
+#picTableCell
+{
+background-color:white;
+padding:20px;
+
+}
+#submit
+{
+margin-top:20px;
+width:100px;
+height:50px;
+font-size:16px;
+}
+#top
+{
+width:25%;
+text-align:center;
+margin:auto;
+}
+#paragraphs
+{
+text-align:center;
+width:50%;
+margin:auto;
+}
+#formDiv
+{
+width:75%;
+margin:auto;
+text-align:center;
+}
+
+label {
+  display: block;
+  padding-left: 15px;
+  text-indent: -15px;
+}
+input {
+  width: 13px;
+  height: 13px;
+  padding: 0;
+  margin:0;
+  vertical-align: bottom;
+  position: relative;
+  top: -1px;
+  *overflow: hidden;
+}
+
+*{
+	background-color:black;
+}*/
+
+.btn-floating{
+	left:20%;
+}
